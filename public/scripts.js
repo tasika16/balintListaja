@@ -1,173 +1,177 @@
 var simulators = [
-    { name: "Heavy Minigun Guy", identity: "T6000", cost: 20000 },
-    { name: "Boba Fet", identity: "T5220", cost: 15000 }
+  { 'name': "Heavy Minigun Guy", 'identity': "T6000", 'cost': 20000 },
+  { 'name': "Boba Fet", 'identity': "T5220", 'cost': 15000 }
 ];
 
-var tr = "<tr>";
-var trc = "</tr>";
-var td = "<td>";
-var tdc = "</td>";
-var deleteBtn = '';
-var tableData = "<tr>";
-var tableBody = document.getElementById('dataTableBody');
+var delete_btn = '';
+var table_data = "<tr>";
+var table_body = document.getElementById('dataTableBody');
 
 buildTable();
 
 function sumCost() {
-    var sum = 0;
-    for (var i = 0; i < simulators.length; i++) {
-        sum += simulators[i].cost;
-    }
-    return sum;
+  var sum = 0;
+  for (var i = 0; i < simulators.length; i++) {
+    sum += simulators[i].cost;
+  }
+  return sum;
+}
+
+function formatCurrency(simulator) {
+  return simulator.cost.toString();
 }
 
 function buildTable() {
-    customSort();
-    removeTable();
-    for (var i = 0; i < simulators.length; i++) {
-        deleteBtn = '<button type="button" class="icon-button" onclick="deleteRowFunction(' + i +
-            ' )"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
-        tableData += td + simulators[i].name + tdc + td + simulators[i].identity + tdc + td + "$" +
-            simulators[i].cost.toString() + tdc + td + deleteBtn + tdc + trc;
-    }
+  var tr = "<tr>";
+  var trc = "</tr>";
+  var td = "<td>";
+  var tdc = "</td>";
+  var th = "<th>";
+  var thc= "</th>";
 
-    var tableHeader = tr + td + " " + tdc + td + simulators.length.toString() + " simulators" + tdc + td + "$" +
-        sumCost().toString() + " total" + tdc + trc;
+  simulators.sort(customSort);
+  removeTable();
 
-    dataTableHead.innerHTML += tableHeader;
-    tableBody.innerHTML += tableData;
+  for (var i = 0; i < simulators.length; i++) {
+    delete_btn = '<button type="button" class="icon-button" onclick="deleteRowFunction(' + i +
+      ' )"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
+    table_data += td + simulators[i].name + tdc + td + simulators[i].identity + tdc + td + "$" +
+      formatCurrency(simulators[i]) + tdc + td + delete_btn + tdc + trc;
+  }
+
+  var table_header = tr + th + "Name" + thc + th + "Type number" + thc + th + "Price" + 
+  thc + th+ "" +thc + trc ;
+
+  var table_footer = tr + td + " " + tdc + td + simulators.length.toString() + " simulators" + tdc + td + "$" +
+    sumCost().toString() + " total" + tdc + td + tdc + trc;
+
+  dataTableHead.innerHTML += table_header;
+  table_body.innerHTML += table_data;
+  dataTableFooter.innerHTML += table_footer;
 }
 
-function sumCostSearchTable(searchResult) {
-    var sum = 0;
-    for (var i = 0; i < searchResult.length; i++) {
-        sum += searchResult[i].cost;
-    }
-    return sum;
+function sumCostSearchTable(search_result) {
+  var sum = 0;
+  for (var i = 0; i < search_result.length; i++) {
+    sum += search_result[i].cost;
+  }
+  return sum;
 }
 
 function filteredSimulators(query) {
-    return simulators.filter(function (s) {
-        return s.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
-    })
-}
-
-function filteredSimulatorsByID(query) {
-    return simulators.filter(function (s) {
-        return s.identity.toLowerCase().indexOf(query.toLowerCase()) > -1;
-    })
+  return simulators.filter(function (s) {
+    return s.name.toLowerCase().indexOf(query.toLowerCase()) > -1
+      || s.identity.toLowerCase().indexOf(query.toLowerCase()) > -1;
+  });
 }
 
 function buildSearchTable() {
-    var searched = document.getElementById("searchTxt").value.toString();
-    if (searched.trim() == "") {
-        document.getElementById("searchErrorLabel").innerHTML = "Please fill the search field!";
+  var tr = "<tr>";
+  var trc = "</tr>";
+  var td = "<td>";
+  var tdc = "</td>";
+  var searched = document.getElementById("searchTxt").value.toString();
+
+  if (searched.trim() == "") {
+    document.getElementById("searchErrorLabel").innerHTML = "Please fill the search field!";
+  }
+  else {
+    document.getElementById("searchErrorLabel").innerHTML = "";
+    var search_result = filteredSimulators(searched);
+
+    search_result.sort(customSort);
+    removeTable();
+
+    for (var i = 0; i < search_result.length; i++) {
+      delete_btn = '<button type="button" class="icon-button"  onclick="deleteRowFunction(' + i +
+        ' )"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
+      table_data += td + search_result[i].name + tdc + td + search_result[i].identity + tdc + td + "$" +
+        search_result[i].cost.toString() + tdc + td + delete_btn + tdc + trc;
     }
-    else {
-        document.getElementById("searchErrorLabel").innerHTML = "";
-        var searchResult = filteredSimulators(searched);
-        console.log(searchResult);
-        console.log(filteredSimulators(searched));
-        if (0 == searchResult.length) {
-            console.log("Most pedig lefutatom a másikat")
-            searchResult = filteredSimulatorsByID(searched);
-        }
 
-        customSearchSort(searchResult);
-        removeTable();
+    var table_header = tr + td + " " + tdc + td + search_result.length.toString() + " simulators" + tdc + td + "$" +
+      sumCostSearchTable(search_result).toString() + " total" + tdc + trc;
 
-        for (var i = 0; i < searchResult.length; i++) {
-            deleteBtn = '<button type="button" class="icon-button"  onclick="deleteRowFunction(' + i +
-                ' )"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
-            tableData += td + searchResult[i].name + tdc + td + searchResult[i].identity + tdc + td + "$" +
-                searchResult[i].cost.toString() + tdc + td + deleteBtn + tdc + trc;
-        }
-
-        var tableHeader = tr + td + " " + tdc + td + searchResult.length.toString() + " simulators" + tdc + td + "$" +
-            sumCostSearchTable(searchResult).toString() + " total" + tdc + trc;
-        var table = tableHeader + tableData;
-        tableBody.innerHTML += table;
-    }
+    dataTableHead.innerHTML += table_header;
+    table_body.innerHTML += table_data;
+  }
 
 }
 
 function removeTable() {
-    tableBody.innerHTML = "";
-    dataTableHead.innerHTML = "";
-    tableData = "";
+  table_body.innerHTML = "";
+  dataTableHead.innerHTML = "";
+  table_data = "";
 }
 
-function customSort() {
-    simulators.sort(function (a, b) {
-        var nameA = a.name.toUpperCase();
-        var nameB = b.name.toUpperCase();
-        if (nameA < nameB) {
-            return -1;
-        }
-        else if (nameA > nameB) {
-            return 1;
-        }
-        return 0;
-    })
+function customSort(a, b) {
+  var name_a = a.name.toUpperCase();
+  var name_b = b.name.toUpperCase();
+  if (name_a < name_b) {
+    return -1;
+  }
+  else if (name_a > name_b) {
+    return 1;
+  }
+  return 0;
 }
 
-function customSearchSort(searchResult) {
-    searchResult.sort(function (a, b) {
-        var nameA = a.name.toUpperCase();
-        var nameB = b.name.toUpperCase();
-        if (nameA < nameB) {
-            return -1;
-        }
-        else if (nameA > nameB) {
-            return 1;
-        }
-        return 0;
-    });
+function checkedID(tmp_identity) {
+  var is_ID = false;
+  var i = 0;
+  while (i < simulators.length && simulators[i].identity !== tmp_identity.trim()) {
+    i++;
+  }
+  if (i < simulators.length) {
+    return true;
+  }
+  else {
+    return false;
+  }
+  return is_ID;
 }
 
-function checkedID(tmpIdentity) {
-    var isID = false;
-    for (var i = 0; i < simulators.length; i++) {
-        if (simulators[i].identity === tmpIdentity.trim()) {
-            isID = true;
-        }
-    }
-    return isID;
+function htmlEncode(str) {
+  str = str.toString();
+  return str.replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
 }
 
 function addDataArray() {
 
-    var tmpName = document.getElementById("nameInpt").value;
-    var tmpIdentity = document.getElementById("identifyInpt").value;
-    var tmpCost = document.getElementById("costInpt").value;
+  var tmp_name = htmlEncode(document.getElementById("nameInpt").value);
+  var tmp_identity = htmlEncode(document.getElementById("identifyInpt").value);
+  var tmp_cost = htmlEncode(document.getElementById("costInpt").value);
 
-
-    if (tmpName.trim() === '' || tmpIdentity.trim() === '' || tmpCost.trim() === '') {
-        document.getElementById("formErrorLabel").innerHTML = "Please fill every field!";
-    }
-    else if (checkedID(tmpIdentity))
-    { document.getElementById("formErrorLabel").innerHTML = "This Identity is already exists!"; }
-    else if ((Number.isInteger((parseInt(tmpCost)))) == false) {
-        document.getElementById("formErrorLabel").innerHTML = "Please fill the cost field just number!";
-    }
-    else {
-        document.getElementById("formErrorLabel").innerHTML = "";
-        var simulator = {
-            name: tmpName,
-            identity: tmpIdentity,
-            cost: parseInt(tmpCost)
-        };
-        console.log(simulator);
-        simulators.push(simulator);
-        //removeTable();
-        buildTable();
-    }
+  if (tmp_name.trim() === '' || tmp_identity.trim() === '' || tmp_cost.trim() === '') {
+    document.getElementById("formErrorLabel").innerHTML = "Please fill every field!";
+  }
+  else if (checkedID(tmp_identity)) {
+    document.getElementById("formErrorLabel").innerHTML = "This ID already exists!";
+  }
+  else if (!(Number.isInteger((parseInt(tmp_cost))))) {
+    document.getElementById("formErrorLabel").innerHTML = "Please fill the cost field just number!";
+  }
+  else {
+    document.getElementById("formErrorLabel").innerHTML = "";
+    var simulator = {
+      name: tmp_name,
+      identity: tmp_identity,
+      cost: parseInt(tmp_cost)
+    };
+    console.log(simulator);
+    simulators.push(simulator);
+    //removeTable();
+    buildTable();
+  }
 
 
 }
 
-
 function deleteRowFunction(btnIDX) {
-    simulators.splice(btnIDX, 1);
-    buildTable();
+  simulators.splice(btnIDX, 1);
+  buildTable();
 }

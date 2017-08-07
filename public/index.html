@@ -2,49 +2,47 @@
 <html lang="hu">
 
 <head>
-    <title>Lista</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <title>Lista</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="style.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container blackBgr">
-        <div class="well well-sm">
-            <div class="form-inline">
-                <input type="text" class="form-control" id="searchTxt" placeholder="Type search here" />
-                <button type="button" class="btn btn-default" onclick="buildSearchTable()">
+  <div class="pageContainer">
+
+
+    <div class="divCustom" id="searchDiv">
+      <input type="text" class="" id="searchTxt" placeholder="Type search here" />
+      <button type="button" class="form-button" onclick="buildSearchTable()">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></button>
-                <span class="label label-danger" id="searchErrorLabel"></span>
-            </div>
-
-        </div>
-        <div class="well well-sm">
-            <table class="table">
-                <thead id="dataTableHead"></thead>
-                <tbody id="dataTableBody"></tbody>
-            </table>
-        </div>
-        <div class="well well-sm">
-            <div class="form-inline">
-                <input type="text" class="form-control" id="nameInpt" placeholder="Type simulator name here" required/>
-                <input type="text" class="form-control" id="identifyInpt" placeholder="Type simulator id here" required/>
-                <input type="text" class="form-control" id="costInpt" placeholder="Type simulator price here" required/>
-
-                <button type="submit" class="btn btn-default" onclick="addDataArray()"><span class="glyphicon glyphicon-plus" 
-                    aria-hidden="true"></span></button>
-
-                <span class="label label-danger" id="formErrorLabel"></span>
-            </div>
-        </div>
+      <span class="formErLabel" id="searchErrorLabel"></span>
     </div>
 
+    <div class="divCustom">
+      <table class="">
+        <thead id="dataTableHead"></thead>
+        <tbody id="dataTableBody"></tbody>
+        <tfoot id="dataTableFooter"></tfoot>
+      </table>
+    </div>
 
+    <div class="divCustom">
+      <input type="text" class="" id="nameInpt" placeholder="Type simulator name here" required/>
+      <input type="text" class="" id="identifyInpt" placeholder="Type simulator id here" required/>
+      <input type="text" class="" id="costInpt" placeholder="Type simulator price here" required/>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="scripts.js"></script>
+      <button type="submit" class="form-button" onclick="addDataArray()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+      <span class="formErLabel" id="formErrorLabel"></span>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="scripts.js"></script>
 </body>
 
 </html>

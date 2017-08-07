@@ -1,3 +1,21 @@
+body{
+  background-color: #000;
+}
+
+.pageContainer{
+   margin: auto;
+   width: 95%;
+   padding: 10px;
+}
+
+.divCustom{
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  margin: 10px 5px 10px 5px;
+  padding: 10px 0px 10px 10px;
+  background-color: #fff;
+}
 
 .icon-button{
     appearance: none;
@@ -8,3 +26,50 @@
     background: transparent;
 }
 
+.form-button{
+  border: 1px solid gray;
+  border-radius: 2px;
+  background-color: white;
+  padding: 7px 12px;
+  margin: 0px 0px 0px 0px;
+}
+.form-button:hover{
+  background-color: gray;
+}
+
+input[type=text], select{
+  display: inline-block;
+  padding: 8px 8px 8px 18px;
+  border: 1px solid #ccc;
+  border-radius:4px;
+  box-sizing: border-box;
+  width: 32%;
+}
+/*---Search Input--*/
+#searchDiv{
+  padding: 0px 0px 0px 0px;
+   
+}
+#searchTxt{
+  width: 97%;
+  margin: 0px 0px 0px 0px;
+}
+/*---Table Div---*/
+table{
+  width: 100%;
+}
+
+th, td{
+  text-align: left;
+  padding: 10px; 
+  border-bottom: 1px solid #ddd;
+}
+
+tfoot{
+  color: darkgray;
+}
+
+.formErLabel{
+  background-color: red;
+  border-radius: 2px;
+}
