@@ -12,16 +12,13 @@
 
 <body>
   <div class="pageContainer">
-
-
     <div class="divCustom" id="searchDiv">
       <input type="text" class="" id="searchTxt" placeholder="Type search here" />
-      <button type="button" class="form-button" onclick="buildSearchTable()">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></button>
+      <!-- <span class="glyphicon glyphicon-search" aria-hidden="true"> -->
       <span class="formErLabel" id="searchErrorLabel"></span>
     </div>
 
-    <div class="divCustom">
+    <div class="divCustom" id="tableDiv">
       <table class="">
         <thead id="dataTableHead"></thead>
         <tbody id="dataTableBody"></tbody>
@@ -29,12 +26,12 @@
       </table>
     </div>
 
-    <div class="divCustom">
+    <div class="divCustom" id="addFieldDiv">
       <input type="text" class="" id="nameInpt" placeholder="Type simulator name here" required/>
       <input type="text" class="" id="identifyInpt" placeholder="Type simulator id here" required/>
       <input type="text" class="" id="costInpt" placeholder="Type simulator price here" required/>
 
-      <button type="submit" class="form-button" onclick="addDataArray()">
+      <button type="submit" class="form-button" id="addDataToArray">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
       <span class="formErLabel" id="formErrorLabel"></span>
     </div>

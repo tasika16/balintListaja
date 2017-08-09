@@ -39,7 +39,7 @@ body{
 
 input[type=text], select{
   display: inline-block;
-  padding: 8px 8px 8px 18px;
+  padding: 8px 8px 8px 20px;
   border: 1px solid #ccc;
   border-radius:4px;
   box-sizing: border-box;
@@ -51,7 +51,7 @@ input[type=text], select{
    
 }
 #searchTxt{
-  width: 97%;
+  width: 100%;
   margin: 0px 0px 0px 0px;
 }
 /*---Table Div---*/
@@ -72,4 +72,11 @@ tfoot{
 .formErLabel{
   background-color: red;
   border-radius: 2px;
+}
+
+#searchTxt{
+  background: url(searchIcon.png) no-repeat scroll;
+  background-position: 0px 10px;
+  background-size: 16px 16px;
+  padding-left: 15px;
 }
