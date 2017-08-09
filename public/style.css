@@ -1,14 +1,14 @@
-body{
+body {
   background-color: #000;
 }
 
-.pageContainer{
+.pageContainer{ 
    margin: auto;
    width: 95%;
    padding: 10px;
 }
 
-.divCustom{
+.divCustom {
   border-style: solid;
   border-width: 1px;
   border-radius: 5px;
@@ -17,7 +17,7 @@ body{
   background-color: #fff;
 }
 
-.icon-button{
+.icon-button {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -26,18 +26,19 @@ body{
     background: transparent;
 }
 
-.form-button{
+.form-button {
   border: 1px solid gray;
   border-radius: 2px;
   background-color: white;
   padding: 7px 12px;
-  margin: 0px 0px 0px 0px;
+  margin: 0;
 }
-.form-button:hover{
+
+.form-button:hover {
   background-color: gray;
 }
 
-input[type=text], select{
+input[type=text], select {
   display: inline-block;
   padding: 8px 8px 8px 20px;
   border: 1px solid #ccc;
@@ -45,36 +46,38 @@ input[type=text], select{
   box-sizing: border-box;
   width: 32%;
 }
+
 /*---Search Input--*/
-#searchDiv{
-  padding: 0px 0px 0px 0px;
-   
+#searchDiv {
+  padding: 0px 0px 0px 0px;   
 }
-#searchTxt{
+
+#searchTxt {
   width: 100%;
   margin: 0px 0px 0px 0px;
 }
+
 /*---Table Div---*/
-table{
+table {
   width: 100%;
 }
 
-th, td{
+th, td {
   text-align: left;
   padding: 10px; 
   border-bottom: 1px solid #ddd;
 }
 
-tfoot{
+tfoot {
   color: darkgray;
 }
 
-.formErLabel{
+.formErLabel {
   background-color: red;
   border-radius: 2px;
 }
 
-#searchTxt{
+#searchTxt {
   background: url(searchIcon.png) no-repeat scroll;
   background-position: 0px 10px;
   background-size: 16px 16px;
