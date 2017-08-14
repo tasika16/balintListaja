@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "express": "^4.15.3"
+    "bookshelf": "^0.10.4",
+    "express": "^4.15.3",
+    "knex": "^0.13.0"
   },
   "devDependencies": {},
   "scripts": {
