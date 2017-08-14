@@ -14,7 +14,7 @@ var Simulators = bookshelf.Model.extend({
   tableName: "simulators"
 });
 
-Simulators.fetchAll()
+Simulators.forge().orderBy('name', 'ASC').fetchAll()
   .then(function (xs) {
     console.log(xs.toJSON());
     knex.destroy();
