@@ -38,7 +38,3 @@ if(process.argv.length === 4){
 else{
     console.log("Not enough parameters");
 }
-
-
-
-//Simulators.forge({name: , price:}).save().then(function(){});

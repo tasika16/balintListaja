@@ -6,7 +6,8 @@
   "dependencies": {
     "bookshelf": "^0.10.4",
     "express": "^4.15.3",
-    "knex": "^0.13.0"
+    "knex": "^0.13.0",
+    "pg": "^7.1.0"
   },
   "devDependencies": {},
   "scripts": {
