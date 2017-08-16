@@ -17,14 +17,22 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/simulators', function (req, res) {
-  //get the data from database
-  Simulators
-    .where(req.query)
-    .orderBy('name','ASC')
-    .fetchAll()
-    .then(function (content) {
-      res.json({ content });
-    });
+  if (req.query.search) {
+    Simulators.query(function (qb) {
+      qb.where('name', 'LIKE', (req.query.search + '%'))
+    }).orderBy('name', 'ASC')
+      .fetchAll()
+      .then(function (content) {
+        res.json({ content });
+      });
+  }
+  else {
+    Simulators.forge().orderBy('name', 'ASC').fetchAll()
+      .then(function (content) {
+        res.json({content});
+      });
+  }
+
 });
 
 app.post('/api/simulators', json_parser, function (req, res) {
