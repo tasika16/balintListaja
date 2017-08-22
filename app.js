@@ -1,12 +1,13 @@
+var is_uuid = require('isuuid');
 var express = require('express');
 var app = express();
 var path = require('path');
 var bookshelf = require("./connection.js");
-var bodyParser = require('body-parser');
-var json_parser = bodyParser.json();
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var body_parser = require('body-parser');
+var json_parser = body_parser.json();
+var urlencoded_parser = body_parser.urlencoded({ extended: false });
 
-var Simulators = bookshelf.Model.extend({
+var Simulator = bookshelf.Model.extend({
   tableName: "simulators"
 });
 
@@ -17,45 +18,79 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/simulators', function (req, res) {
-  if (req.query.search) {
-    Simulators.query(function (qb) {
-      qb.where('name', 'LIKE', (req.query.search + '%'))
-    }).orderBy('name', 'ASC')
-      .fetchAll()
-      .then(function (content) {
-        res.json({ content });
-      });
+  var simulator;
+  var search = req.query.search;
+  if (search) {
+    search = search.replace(/_%/, '');
+    simulator = Simulator.query(function (qb) {
+      qb.where('name', 'LIKE',
+        bookshelf.knex.raw(':searched', { searched: search + '%' }))
+    });
   }
   else {
-    Simulators.forge().orderBy('name', 'ASC').fetchAll()
-      .then(function (content) {
-        res.json({content});
-      });
+    simulator = Simulator.forge();
   }
-
-});
-
-app.post('/api/simulators', json_parser, function (req, res) {
-  //save the database
-  new Simulators({
-    'name': req.body.name,
-    'type_number': req.body.type_number,
-    'price': req.body.price
-  })
-    .save()
+  simulator
+    .orderBy('name', 'ASC')
+    .fetchAll()
     .then(function (content) {
       res.json({ content });
     })
+    .catch(function () {
+      res.status(500).send({ error: 'Internal server error!' });
+    });
+});
+
+//todo transaction/semaphore
+app.post('/api/simulators', json_parser, function (req, res) {
+  //save the database
+  if (typeof req.body.name === 'string' && typeof req.body.type_number === 'string'
+    && Number.isInteger(parseInt(req.body.price))) {
+    Simulator
+      .where('type_number', req.body.type_number)
+      .fetch()
+      .catch(function () {
+        res.status(500).send({ error: 'Internal server error!' });
+      })
+      .then(function (content) {
+        if (content === null) {
+          new Simulator({
+            name: req.body.name,
+            type_number: req.body.type_number,
+            price: req.body.price
+          })
+            .save()
+            .then(function (content) {
+              res.json({ content });
+            });
+        }
+        else {
+          res.status(400).send({ error: 'This Type number already exists!' });
+        }
+      });
+  }
+  else {
+    res.status(400).send({ error: 'Bad Type!' })
+  }
 });
 
 app.delete('/api/simulators/:id', function (req, res) {
   //delete from the database
-  Simulators
-    .where('id', req.params.id)
-    .destroy()
-    .then(function (content) {
-      res.send({ content });
-    });
+  var result = is_uuid(req.params.id);
+  if (result) {
+    Simulator
+      .where('id', req.params.id)
+      .destroy()
+      .then(function (content) {
+        res.send({ content });
+      })
+      .catch(function () {
+        res.status(500).send({ error: 'Internal server error!' });
+      })
+  }
+  else {
+    res.status(400).send({ error: 'This is an invalid UUID' });
+  }
 });
 
 app.listen(3000);
