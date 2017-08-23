@@ -5,7 +5,6 @@ var path = require('path');
 var bookshelf = require("./connection.js");
 var body_parser = require('body-parser');
 var json_parser = body_parser.json();
-var urlencoded_parser = body_parser.urlencoded({ extended: false });
 
 var Simulator = bookshelf.Model.extend({
   tableName: "simulators"
@@ -17,14 +16,17 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
+function handleError(status_code, message) {
+  res.status(status_code).send({ error: message });
+}
+
 app.get('/api/simulators', function (req, res) {
   var simulator;
   var search = req.query.search;
   if (search) {
     search = search.replace(/_%/, '');
     simulator = Simulator.query(function (qb) {
-      qb.where('name', 'LIKE',
-        bookshelf.knex.raw(':searched', { searched: search + '%' }))
+      qb.where('name', 'LIKE', bookshelf.knex.raw('?', [search + '%']))
     });
   }
   else {
@@ -37,47 +39,51 @@ app.get('/api/simulators', function (req, res) {
       res.json({ content });
     })
     .catch(function () {
-      res.status(500).send({ error: 'Internal server error!' });
+      handleError(500, 'Internal Server Error!');
     });
 });
 
 //todo transaction/semaphore
 app.post('/api/simulators', json_parser, function (req, res) {
   //save the database
-  if (typeof req.body.name === 'string' && typeof req.body.type_number === 'string'
-    && Number.isInteger(parseInt(req.body.price))) {
-    Simulator
-      .where('type_number', req.body.type_number)
-      .fetch()
-      .catch(function () {
-        res.status(500).send({ error: 'Internal server error!' });
-      })
-      .then(function (content) {
-        if (content === null) {
-          new Simulator({
-            name: req.body.name,
-            type_number: req.body.type_number,
-            price: req.body.price
-          })
-            .save()
-            .then(function (content) {
-              res.json({ content });
-            });
-        }
-        else {
-          res.status(400).send({ error: 'This Type number already exists!' });
-        }
-      });
+  if (req.body.name.trim() !== '' && req.body.type_number.trim() !== '') {
+    if (typeof req.body.name === 'string' && typeof req.body.type_number === 'string' &&
+      Number.isInteger(parseInt(req.body.price))) {
+      Simulator
+        .where('type_number', req.body.type_number)
+        .fetch()
+        .then(function (content) {
+          if (content === null) {
+            new Simulator({
+              name: req.body.name,
+              type_number: req.body.type_number,
+              price: req.body.price
+            })
+              .save()
+              .then(function (content) {
+                res.json({ content });
+              });
+          }
+          else {
+            handleError(400, 'This Type number already exists!');
+          }
+        })
+        .catch(function () {
+          handleError(500, 'Internal Server Error!');
+        });
+    }
+    else {
+      handleError(400, 'Bad Type!');
+    }
   }
   else {
-    res.status(400).send({ error: 'Bad Type!' })
+    handleError(400, 'None of the fields can be empty');
   }
 });
 
 app.delete('/api/simulators/:id', function (req, res) {
   //delete from the database
-  var result = is_uuid(req.params.id);
-  if (result) {
+  if (is_uuid(req.params.id)) {
     Simulator
       .where('id', req.params.id)
       .destroy()
@@ -85,11 +91,11 @@ app.delete('/api/simulators/:id', function (req, res) {
         res.send({ content });
       })
       .catch(function () {
-        res.status(500).send({ error: 'Internal server error!' });
+        handleError(500, 'Internal Server Error!');
       })
   }
   else {
-    res.status(400).send({ error: 'This is an invalid UUID' });
+    handleError(400, 'This is an invalid UUID');
   }
 });
 
