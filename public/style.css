@@ -72,8 +72,8 @@ tfoot {
 }
 
 .formErLabel {
-  background-color: red;
-  border-radius: 2px;
+  color: #AA0303;
+  border-radius: 3px;
 }
 
 #searchTxt {

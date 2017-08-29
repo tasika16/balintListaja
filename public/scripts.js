@@ -1,4 +1,5 @@
 function ajaxReq(setType, setUrl, data = "") {
+  if (setType === 'POST') { data = JSON.stringify(data); }
   return $.ajax({
     type: setType,
     url: setUrl,
@@ -50,8 +51,8 @@ function buildTable(build_array) {
 
 /*---SearchTable---*/
 $("#searchTxt").on("keyup", function () {
-  var searched = $('#searchTxt').val();
-  ajaxReq('GET', '/api/simulators?search=' + searched)
+  var searched = 'search=' + $('#searchTxt').val();
+  ajaxReq('GET', '/api/simulators', searched)
     .done(function (res) {
       buildTable(res.content);
     })
@@ -64,8 +65,8 @@ $('#searchTxt').on("keyup", function () {
   }
 });
 
+/*Add simulator to table*/
 $("#addDataToArray").on("click", function (event) {
-
   var tmp_name = htmlEncode($('#nameInpt').val());
   var tmp_type_number = htmlEncode($('#type_numberInpt').val());
   var tmp_price = htmlEncode($('#priceInpt').val());
@@ -73,23 +74,24 @@ $("#addDataToArray").on("click", function (event) {
   if (tmp_name.trim() === '' || tmp_type_number.trim() === '' || tmp_price.trim() === '') {
     $('#formErrorLabel').html("Please fill every field!");
   }
-  else if (checkedID(tmp_type_number)) {
-    $('#formErrorLabel').html("This Type number already exists!");
-  }
   else if (!(Number.isInteger((parseInt(tmp_price))))) {
     $('#formErrorLabel').html("Please fill the price field just number!");
   }
   else {
-    $('#formErrorLabel').html("");
+    $('#formErrorLabel').html('');
     var simulator = {
       name: tmp_name,
       type_number: tmp_type_number,
       price: parseInt(tmp_price)
     };
-    ajaxReq('POST', '/api/simulators', JSON.stringify(simulator))
+    ajaxReq('POST', '/api/simulators', simulator)
       .done(function (res) {
         $('.addToTableClass').val('');
         ajaxRexGet();
+      })
+      .fail(function (jqXHR, status, err) {
+        console.log(jqXHR);
+        $("#formErrorLabel").html(jqXHR.responseJSON.error);
       })
   }
 });
@@ -117,24 +119,6 @@ function sumprice(build_array) {
 
 function formatCurrency(fprice) {
   return '$' + fprice.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-}
-
-function checkedID(tmp_type_number) {
-  var is_ID;
-  var i = 0;
-  ajaxReq('GET', '/api/simulators')
-    .done(function (data) {
-      while (i < data.length && data[i].type_number !== tmp_type_number.trim()) {
-        i++;
-      }
-      if (i < data.length) {
-        return true;
-      }
-      else {
-        return false;
-      }
-      return is_ID;
-    });
 }
 
 function htmlEncode(str) {

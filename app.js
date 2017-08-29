@@ -16,7 +16,7 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-function handleError(status_code, message) {
+function handleError(status_code, message, res) {
   res.status(status_code).send({ error: message });
 }
 
@@ -46,9 +46,9 @@ app.get('/api/simulators', function (req, res) {
 //todo transaction/semaphore
 app.post('/api/simulators', json_parser, function (req, res) {
   //save the database
-  if (req.body.name.trim() !== '' && req.body.type_number.trim() !== '') {
-    if (typeof req.body.name === 'string' && typeof req.body.type_number === 'string' &&
-      Number.isInteger(parseInt(req.body.price))) {
+  if (typeof req.body.name === 'string' && typeof req.body.type_number === 'string' &&
+    Number.isInteger(parseInt(req.body.price))) {
+    if (req.body.name.length > 0 && req.body.type_number.length > 0) {
       Simulator
         .where('type_number', req.body.type_number)
         .fetch()
@@ -65,19 +65,19 @@ app.post('/api/simulators', json_parser, function (req, res) {
               });
           }
           else {
-            handleError(400, 'This Type number already exists!');
+            handleError(400, 'This Type number already exists!', res);
           }
         })
         .catch(function () {
-          handleError(500, 'Internal Server Error!');
+          handleError(500, 'Internal Server Error!', res);
         });
     }
-    else {
-      handleError(400, 'Bad Type!');
+    else{
+      handleError(400, 'None of the fields can be empty');
     }
   }
   else {
-    handleError(400, 'None of the fields can be empty');
+    handleError(400, 'Bad Type!', res);
   }
 });
 
