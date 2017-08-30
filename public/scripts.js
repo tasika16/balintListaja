@@ -15,7 +15,8 @@ ajaxRexGet();
 function ajaxRexGet() {
   ajaxReq('GET', '/api/simulators')
     .done(function (res) {
-      buildTable(res.content);
+      console.log(res.content);
+      buildTable(res);
     });
 }
 
@@ -28,6 +29,7 @@ function buildTable(build_array) {
   var thc = "</th>";
   var delete_btn = '';
   var table_data = "<tr>";
+  console.log(build_array);
   for (var i = 0; i < build_array.length; i++) {
     delete_btn = '<button type="button" id="deleteBtn" class="icon-button" data-simulator_id="' + build_array[i].id +
       '"><i class="fa fa-trash" aria-hidden="true"></i></button>';
