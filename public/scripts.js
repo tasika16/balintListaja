@@ -29,8 +29,10 @@ function buildTable(build_array) {
   var delete_btn = '';
   var table_data = "<tr>";
   for (var i = 0; i < build_array.length; i++) {
-    delete_btn = '<button type="button" id="deleteBtn" class="icon-button" data-simulator_id="' + build_array[i].id +
-      '"><i class="fa fa-trash" aria-hidden="true"></i></button>';
+    delete_btn = '<button type="button" id="deleteBtn"' +
+      'class="icon-button delete-button"' +
+      'data-simulator_id="' + build_array[i].id +
+      '"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>';
     table_data += td + build_array[i].name + tdc + td +
       build_array[i].type_number + tdc + td +
       formatCurrency(build_array[i].price) + tdc + td + delete_btn + tdc + trc;

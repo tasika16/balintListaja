@@ -1,11 +1,11 @@
 body {
-  background-color: #000;
+  background-color: #100433;
 }
 
 .pageContainer{ 
    margin: auto;
-   width: 95%;
-   padding: 10px;
+   width: 90%;
+   padding: 20px;
 }
 
 .divCustom {
@@ -13,7 +13,9 @@ body {
   border-radius: 5px;
   margin: 10px 5px 10px 5px;
   padding: 10px 0px 10px 10px;
-  background-color: #fff;
+  background-color: #FFFFFF;
+  font-size: 16px;
+  font-family: 'Josefin Sans';
 }
 
 .icon-button {
@@ -31,10 +33,21 @@ body {
   background-color: white;
   padding: 7px 12px;
   margin: 0;
+  cursor: pointer;
 }
 
 .form-button:hover {
   background-color: gray;
+}
+
+.delete-button{
+  cursor: pointer;
+  padding: 5px;
+}
+
+.delete-button:hover{
+  border-radius: 5px;
+  background-color: #B8B8B8;
 }
 
 input[type=text], select {
@@ -46,14 +59,9 @@ input[type=text], select {
   width: 32%;
 }
 
-/*---Search Input--*/
-#searchDiv {
-  padding: 0px 0px 0px 0px;   
-}
-
 #searchTxt {
-  width: 100%;
-  margin: 0px 0px 0px 0px;
+  width: 99%;
+  margin: 0px;
 }
 
 /*---Table Div---*/
@@ -63,7 +71,7 @@ table {
 
 th, td {
   text-align: left;
-  padding: 10px; 
+  padding: 13px; 
   border-bottom: 1px solid #ddd;
 }
 
