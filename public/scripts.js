@@ -58,7 +58,7 @@ $("#searchTxt").on("keyup", function () {
   var searched = 'search=' + $('#searchTxt').val();
   ajaxReq('GET', '/api/simulators', searched)
     .done(function (res) {
-      buildTable(res.content);
+      buildTable(res);
     })
 });
 

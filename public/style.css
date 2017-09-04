@@ -1,8 +1,9 @@
+
 body {
   background-color: #100433;
 }
 
-.pageContainer{ 
+.pageContainer { 
    margin: auto;
    width: 90%;
    padding: 20px;
@@ -12,9 +13,9 @@ body {
   border: 1px solid transparent;
   border-radius: 5px;
   margin: 10px 5px 10px 5px;
-  padding: 10px 0px 10px 10px;
+  padding: 10px 0px 10px 6px;
   background-color: #FFFFFF;
-  font-size: 16px;
+  font-size: 14px;
   font-family: 'Josefin Sans';
 }
 
@@ -31,7 +32,7 @@ body {
   border: 1px solid gray;
   border-radius: 2px;
   background-color: white;
-  padding: 7px 12px;
+  padding: 8px 10px;
   margin: 0;
   cursor: pointer;
 }
@@ -40,12 +41,12 @@ body {
   background-color: gray;
 }
 
-.delete-button{
+.delete-button {
   cursor: pointer;
   padding: 5px;
 }
 
-.delete-button:hover{
+.delete-button:hover {
   border-radius: 5px;
   background-color: #B8B8B8;
 }
@@ -71,12 +72,21 @@ table {
 
 th, td {
   text-align: left;
-  padding: 13px; 
-  border-bottom: 1px solid #ddd;
+  padding: 5px; 
+  border-bottom: 1px solid #DDDDDD;
+}
+
+th {
+  font-weight: bolder;
 }
 
 tfoot {
   color: darkgray;
+}
+
+.respTable {
+  overflow-x: auto;
+  padding: 0px;
 }
 
 .formErLabel {
@@ -85,8 +95,18 @@ tfoot {
 }
 
 #searchTxt {
-  background: url(searchIcon.png) no-repeat scroll;
-  background-position: 0px 10px;
-  background-size: 16px 16px;
-  padding-left: 15px;
+  padding-left: 25px;
+}
+
+#search-label {
+  position: relative;
+}
+
+#search-label:before {
+  color: #666;
+  content: "\f002";
+  font-family: FontAwesome;
+  position: absolute;
+  top: -1px;
+  left: 5px;
 }

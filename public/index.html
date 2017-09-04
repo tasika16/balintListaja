@@ -14,10 +14,12 @@
 <body>
   <div class="pageContainer">
     <div class="divCustom" id="searchDiv">
-      <input type="text" class="" id="searchTxt" placeholder="Type search here" />
+      <label id="search-label">
+        <input type="text" class="" id="searchTxt" placeholder="Type search here" />
+      </label>
     </div>
 
-    <div class="divCustom" id="tableDiv">
+    <div class="divCustom respTable" id="tableDiv">
       <table class="">
         <thead id="dataTableHead"></thead>
         <tbody id="dataTableBody"></tbody>
@@ -26,9 +28,9 @@
     </div>
 
     <div class="divCustom" id="addToTableDiv">
-      <input type="text" class="addToTableClass" id="nameInpt" name='name' placeholder="Type simulator name here" required>
-      <input type="text" class="addToTableClass" id="type_numberInpt" name='type_number' placeholder="Type simulator id here" required>
-      <input type="text" class="addToTableClass" id="priceInpt" name='price' placeholder="Type simulator price here" required>
+      <input type="text" class="addToTableClass" id="nameInpt" name='name' placeholder="Type simulator name here">
+      <input type="text" class="addToTableClass" id="type_numberInpt" name='type_number' placeholder="Type simulator id here">
+      <input type="text" class="addToTableClass" id="priceInpt" name='price' placeholder="Type simulator price here">
 
       <button type="submit" class="form-button" id="addDataToArray">
         <i class="fa fa-plus"></i></button>
