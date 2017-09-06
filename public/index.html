@@ -12,6 +12,9 @@
 </head>
 
 <body>
+  <div class="connection-error position-horizontaly-centered">
+    <i class="fa fa-plug fa-2x"> Connection error! </i>
+  </div>
   <div class="pageContainer">
     <div class="divCustom" id="searchDiv">
       <label id="search-label">
@@ -20,10 +23,11 @@
     </div>
 
     <div class="divCustom respTable" id="tableDiv">
+      <div id="aggregateRow"> </div>
       <table class="">
         <thead id="dataTableHead"></thead>
         <tbody id="dataTableBody"></tbody>
-        <tfoot id="dataTableFooter"></tfoot>
+        <!-- <tfoot id="dataTableFooter"></tfoot> -->
       </table>
     </div>
 
@@ -34,12 +38,10 @@
 
       <button type="submit" class="form-button" id="addDataToArray">
         <i class="fa fa-plus"></i></button>
-      <span class="formErLabel" id="formErrorLabel"></span>
+      <div class="custom-error" id="custom-error"><i class='fa fa-times-circle'></i></div>
     </div>
   </div>
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
   <script src="scripts.js"></script>
 </body>
 
