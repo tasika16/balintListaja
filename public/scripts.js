@@ -88,7 +88,6 @@ $("#addDataToArray").on("click", function (event) {
     writeError('Please fill the price field just number!');
   }
   else {
-    //$('.custom-error').html('');
     $('.custom-error').hide();
     var simulator = {
       name: tmp_name,
@@ -102,7 +101,7 @@ $("#addDataToArray").on("click", function (event) {
       })
       .fail(function (jqXHR, status, err) {
         if (jqXHR.readyState == 0) {
-          $('.connection-error').show();
+          hideConnErrMessage();
         }
         writeError(jqXHR.responseJSON.error);
       })
@@ -132,10 +131,23 @@ $('table').on("click", 'button', function () {
     })
     .fail(function (jqXHR, status, err) {
       if (jqXHR.readyState == 0) {
-        $('.connection-error').show();
+        hideConnErrMessage();
       }
     })
 });
+
+$('.close-button').on('click', 'i', function(){
+  $('.connection-error').hide('');
+});
+
+function hideConnErrMessage() {
+  $('.connection-error').show();
+  setTimeout(function(){
+    if ($('.connection-errror').show()) {
+      $('.connection-error').hide('');
+    }
+  }, 20000);
+}
 
 function sumprice(build_array) {
   var sum = 0;
