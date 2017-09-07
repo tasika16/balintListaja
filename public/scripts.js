@@ -21,7 +21,7 @@ function ajaxRexGet() {
     })
     .fail(function (jqXHR, status, err) {
       if (jqXHR.readyState == 0) {
-        $('.connection-error').show();
+        showHideConnErrMessage();
       }
     })
 }
@@ -66,6 +66,11 @@ $("#searchTxt").on("keyup", function () {
     .done(function (res) {
       buildTable(res);
     })
+    .fail(function (jqXHR, status, err) {
+      if (jqXHR.readyState == 0) {
+        showHideConnErrMessage();
+      }
+    })
 });
 
 /*---Reset the table after search---*/
@@ -101,7 +106,7 @@ $("#addDataToArray").on("click", function (event) {
       })
       .fail(function (jqXHR, status, err) {
         if (jqXHR.readyState == 0) {
-          $('.connection-error').show();
+          showHideConnErrMessage();
         }
         writeError(jqXHR.responseJSON.error);
       })
@@ -131,8 +136,7 @@ $('table').on("click", 'button', function () {
     })
     .fail(function (jqXHR, status, err) {
       if (jqXHR.readyState == 0) {
-        $('.connection-error').show();
-        hideConnErrMessage();
+        showHideConnErrMessage();
       }
     })
 });
@@ -141,7 +145,8 @@ $('.close-button').on('click', 'i', function(){
   $('.connection-error').hide('');
 });
 
-function hideConnErrMessage() {
+function showHideConnErrMessage() {
+  $('.connection-error').show();
   setTimeout(function(){
     if ($('.connection-errror').show()) {
       $('.connection-error').hide('');
