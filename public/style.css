@@ -54,6 +54,18 @@ body {
   background-color: #B8B8B8;
 }
 
+.close-button { 
+  color: #D8000C;
+  cursor: pointer;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
 input[type=text], select {
   display: inline-block;
   padding: 8px 8px 8px 20px;
@@ -93,12 +105,6 @@ th {
   font-weight: bold;
   font-size: 22px;
 }
-
-/*tfoot td{
-  color: #B4B4B4;
-  border-bottom: 0px;
-  font-size: 14px;
-}*/
 
 .respTable {
   overflow-x: auto;
