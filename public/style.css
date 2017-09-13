@@ -66,6 +66,7 @@ input[type=text], select {
 #searchTxt {
   width: 99%;
   margin: 0px;
+  padding-left: 25px;
 }
 
 /*---Table Div---*/
@@ -93,12 +94,6 @@ th {
   font-weight: bold;
   font-size: 22px;
 }
-
-/*tfoot td{
-  color: #B4B4B4;
-  border-bottom: 0px;
-  font-size: 14px;
-}*/
 
 .respTable {
   overflow-x: auto;
@@ -141,10 +136,6 @@ th {
 .formErLabel {
   color: #AA0303;
   border-radius: 3px;
-}
-
-#searchTxt {
-  padding-left: 25px;
 }
 
 #search-label {

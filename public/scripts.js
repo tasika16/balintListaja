@@ -109,7 +109,7 @@ $("#addDataToArray").on("click", function (event) {
 });
 
 function writeError(msg) {
-  $('.custom-error').show().append(msg);
+  $('.custom-error').show().children().html(msg);
 }
 
 function hideErrMessage() {
