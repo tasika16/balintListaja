@@ -40021,14 +40021,14 @@
 		"./Main.coffee": 137,
 		"./Msg": 132,
 		"./Msg.coffee": 132,
-		"./Search": 146,
-		"./Search.coffee": 146,
-		"./Simulator": 144,
-		"./Simulator.coffee": 144,
-		"./SimulatorAdd": 148,
-		"./SimulatorAdd.coffee": 148,
-		"./SimulatorList": 142,
-		"./SimulatorList.coffee": 142
+		"./Search": 145,
+		"./Search.coffee": 145,
+		"./Simulator": 143,
+		"./Simulator.coffee": 143,
+		"./SimulatorAdd": 147,
+		"./SimulatorAdd.coffee": 147,
+		"./SimulatorList": 141,
+		"./SimulatorList.coffee": 141
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -40056,9 +40056,9 @@
 	  var MainView, SearchView, SimulatorAddView, SimulatorList, SimulatorListView, _BaseViews;
 	  _BaseViews = __webpack_require__(4);
 	  SimulatorList = __webpack_require__(138);
-	  SimulatorListView = __webpack_require__(142);
-	  SearchView = __webpack_require__(146);
-	  SimulatorAddView = __webpack_require__(148);
+	  SimulatorListView = __webpack_require__(141);
+	  SearchView = __webpack_require__(145);
+	  SimulatorAddView = __webpack_require__(147);
 	  return MainView = (function(superClass) {
 	    extend(MainView, superClass);
 
@@ -40067,7 +40067,7 @@
 	      return MainView.__super__.constructor.apply(this, arguments);
 	    }
 
-	    MainView.prototype.template = __webpack_require__(150);
+	    MainView.prototype.template = __webpack_require__(151);
 
 	    MainView.prototype.afterRender = function() {
 	      var searchView, simulatorAddView, simulatorList, simulatorListView;
@@ -40563,18 +40563,30 @@
 /* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	var __WEBPACK_AMD_DEFINE_RESULT__;var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
 
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require) {
 	  var Simulator, _BaseModels;
-	  _BaseModels = __webpack_require__(141);
+	  _BaseModels = __webpack_require__(152);
 	  return Simulator = (function(superClass) {
 	    extend(Simulator, superClass);
 
 	    function Simulator() {
+	      this.validate = bind(this.validate, this);
 	      return Simulator.__super__.constructor.apply(this, arguments);
 	    }
+
+	    Simulator.prototype.validate = function(attrs, opts) {
+	      if (opts.isEmpty) {
+	        if (attrs.name === '' || attrs.type_number === '' || attrs.price === '' || (attrs.name == null) || (attrs.type_number == null) || (attrs.price == null)) {
+	          return 'Please fill every field!';
+	        } else if (!(Number.isInteger(parseInt(attrs.price)))) {
+	          return 'Please fill the price field just number!';
+	        }
+	      }
+	    };
 
 	    return Simulator;
 
@@ -40584,6 +40596,479 @@
 
 /***/ }),
 /* 141 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require) {
+	  var SimulatorListView, SimulatorView, _BaseViews, tpl;
+	  _BaseViews = __webpack_require__(4);
+	  tpl = __webpack_require__(142);
+	  SimulatorView = __webpack_require__(143);
+	  return SimulatorListView = (function(superClass) {
+	    extend(SimulatorListView, superClass);
+
+	    function SimulatorListView() {
+	      this.initNotifierSub = bind(this.initNotifierSub, this);
+	      return SimulatorListView.__super__.constructor.apply(this, arguments);
+	    }
+
+	    SimulatorListView.prototype.className = 'nt-simulator-list';
+
+	    SimulatorListView.prototype.template = tpl;
+
+	    SimulatorListView.prototype.ItemView = SimulatorView;
+
+	    SimulatorListView.prototype.itemCont = '.nt-simulator-list-cont';
+
+	    SimulatorListView.prototype.initNotifierSub = function() {
+	      return this.notifierSub('simulator:add', (function(_this) {
+	        return function(data) {
+	          return _this.collection.add(data);
+	        };
+	      })(this));
+	    };
+
+	    return SimulatorListView;
+
+	  })(_BaseViews.CollectionView);
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 142 */
+/***/ (function(module, exports) {
+
+	module.exports = "<div class=\"nt-simulator-list-header\">\r\n  <div>Name</div>\r\n  <div>Type number</div>\r\n  <div>Price</div>\r\n  <div id=\"aggregateRow\">2 simulators $50000</div>  \r\n</div>\r\n<div class=\"nt-simulator-list-cont\"></div>"
+
+/***/ }),
+/* 143 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require) {
+	  var SimulatorView, _BaseViews, tpl;
+	  _BaseViews = __webpack_require__(4);
+	  tpl = __webpack_require__(144);
+	  return SimulatorView = (function(superClass) {
+	    extend(SimulatorView, superClass);
+
+	    function SimulatorView() {
+	      this.initDomEvents = bind(this.initDomEvents, this);
+	      return SimulatorView.__super__.constructor.apply(this, arguments);
+	    }
+
+	    SimulatorView.prototype.className = 'nt-simulator';
+
+	    SimulatorView.prototype.template = tpl;
+
+	    SimulatorView.prototype.initDomEvents = function() {
+	      SimulatorView.__super__.initDomEvents.apply(this, arguments);
+	      return this.addDomEvent({
+	        'click .nt-btn-del': (function(_this) {
+	          return function() {
+	            return _this.model.collection.remove(_this.model);
+	          };
+	        })(this)
+	      });
+	    };
+
+	    return SimulatorView;
+
+	  })(_BaseViews.View);
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 144 */
+/***/ (function(module, exports) {
+
+	module.exports = "<div data-col=\"name\">{{model.name}}</div>\r\n<div data-col=\"type_number\">{{model.type_number}}</div>\r\n<div data-col=\"price\">{{model.price}}</div>\r\n<div data-col=\"delete\"><button class=\"nt-btn-del icon-button\"><i class='fa fa-trash fa-2x'></i></button></div>"
+
+/***/ }),
+/* 145 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require) {
+	  var SearchView, _BaseViews, tpl;
+	  _BaseViews = __webpack_require__(4);
+	  tpl = __webpack_require__(146);
+	  return SearchView = (function(superClass) {
+	    extend(SearchView, superClass);
+
+	    function SearchView() {
+	      return SearchView.__super__.constructor.apply(this, arguments);
+	    }
+
+	    SearchView.prototype.className = 'nt-search';
+
+	    SearchView.prototype.template = tpl;
+
+	    return SearchView;
+
+	  })(_BaseViews.View);
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 146 */
+/***/ (function(module, exports) {
+
+	module.exports = "<label id='search-label'><input type=\"text\" placeholder=\"Type search here\"></label>"
+
+/***/ }),
+/* 147 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function($) {var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require) {
+	  var Simulator, SimulatorAddView, _BaseViews, bindhelpers, tpl;
+	  _BaseViews = __webpack_require__(4);
+	  tpl = __webpack_require__(148);
+	  bindhelpers = __webpack_require__(149);
+	  Simulator = __webpack_require__(140);
+	  return SimulatorAddView = (function(superClass) {
+	    var handleError;
+
+	    extend(SimulatorAddView, superClass);
+
+	    function SimulatorAddView() {
+	      this.initModelDomBindings = bind(this.initModelDomBindings, this);
+	      this.initDomEvents = bind(this.initDomEvents, this);
+	      this.initEvents = bind(this.initEvents, this);
+	      this.initialize = bind(this.initialize, this);
+	      return SimulatorAddView.__super__.constructor.apply(this, arguments);
+	    }
+
+	    SimulatorAddView.prototype.className = 'nt-simulator-add';
+
+	    SimulatorAddView.prototype.template = tpl;
+
+	    SimulatorAddView.prototype.initialize = function() {
+	      return this.model = new Simulator;
+	    };
+
+	    SimulatorAddView.prototype.initEvents = function() {
+
+	      /*@listenTo @model, 'change', =>
+	        console.log 'change', arguments
+	       */
+	      return this.listenTo(this.model, 'invalid', (function(_this) {
+	        return function() {
+	          return handleError(arguments[1]);
+	        };
+	      })(this));
+	    };
+
+	    SimulatorAddView.prototype.initDomEvents = function() {
+	      return this.addDomEvent({
+	        'click .simulator-add-btn': (function(_this) {
+	          return function() {
+
+	            /*simulator = new Simulator 
+	              name: @$('.simulator-name-inp').val()
+	              type_number: @$('.simulator-type-number-inp').val()
+	              price: @$('.simulator-price-inp').val()
+	            
+	            if simulator.attributes.name == '' || 
+	               simulator.attributes.type_number == '' || 
+	               simulator.attributes.price == ''
+	              handleError 'Please fill every field!'
+	            else if !(Number.isInteger parseInt simulator.attributes.price)
+	              handleError 'Please fill the price field just number!'
+	            else
+	              @notifierPub 'simulator:add', simulator
+	              @notifierPub 'msg:show', 'The add was succesfully!', 'success'
+	              @$('.input').val('');
+	              @notifierPub 'msg:hide', 5000
+	             */
+	            if (_this.model.isValid({
+	              isEmpty: true
+	            })) {
+	              return _this.notifierPub('simulator:add', _this.model.toJSON());
+	            }
+	          };
+	        })(this),
+	        'keypress .input': (function(_this) {
+	          return function() {
+	            return $('.custom-error').hide('');
+	          };
+	        })(this)
+	      });
+	    };
+
+	    SimulatorAddView.prototype.initModelDomBindings = function() {
+	      return this.addModelDomBinding({
+	        name: '.simulator-name-inp',
+	        type_number: '.simulator-type-number-inp',
+	        price: '.simulator-price-inp'
+	      });
+	    };
+
+	    handleError = function(msg) {
+	      return $('.custom-error').show('').children('.fa-times-circle').html(msg);
+	    };
+
+	    return SimulatorAddView;
+
+	  })(_BaseViews.View);
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ }),
+/* 148 */
+/***/ (function(module, exports) {
+
+	module.exports = "<input class=\"simulator-name-inp input\" type=\"text\" placeholder=\"Type simulator name here\" >\r\n<input class=\"simulator-type-number-inp input\" type=\"text\" placeholder=\"Type simulator id here\">\r\n<input class=\"simulator-price-inp input\" type=\"text\" placeholder=\"Type simulator price here\">\r\n<button class=\"form-button simulator-add-btn\">\r\n  <i class=\"fa fa-plus\" aria-hidden=\"true\"></i>\r\n</button>\r\n<div class=\"custom-error\"><i class=\"fa fa-times-circle\" aria-hidden=\"true\"></i></div>"
+
+/***/ }),
+/* 149 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require) {
+	  var _, module, mvconv;
+	  _ = __webpack_require__(1);
+	  mvconv = __webpack_require__(150);
+	  module = {};
+	  module._generic = function(selector, elAttribute, converter) {
+	    return {
+	      selector: selector,
+	      elAttribute: elAttribute,
+	      converter: converter
+	    };
+	  };
+	  module.bool = function(selector, elAttribute) {
+	    return module._generic(selector, elAttribute, mvconv.bool);
+	  };
+	  module.invBool = function(selector, elAttribute) {
+	    return module._generic(selector, elAttribute, mvconv.invBool);
+	  };
+	  module.enabled = function(selector) {
+	    return module.bool(selector, 'enabled');
+	  };
+	  module.disabled = function(selector) {
+	    return module.invBool(selector, 'enabled');
+	  };
+	  module.displayed = function(selector) {
+	    return module._generic(selector, 'displayed');
+	  };
+	  module.hidden = function(selector) {
+	    return module._generic(selector, 'hidden');
+	  };
+	  module["class"] = function(selector, converter) {
+	    return module._generic(selector, 'class', converter);
+	  };
+	  module.boolClass = function(selector, cname) {
+	    return module["class"](selector, function(dir, val) {
+	      if (dir === 'ModelToView') {
+	        if (val) {
+	          return cname;
+	        } else {
+	          return '';
+	        }
+	      }
+	    });
+	  };
+	  module.invBoolClass = function(selector, cname) {
+	    return module["class"](selector, function(dir, val) {
+	      if (dir === 'ModelToView') {
+	        if (!val) {
+	          return cname;
+	        } else {
+	          return '';
+	        }
+	      }
+	    });
+	  };
+	  module.html = function(selector) {
+	    return module._generic(selector, 'html', mvconv.html);
+	  };
+	  module.trimText = function(selector, elAttribute) {
+	    return module._generic(selector, elAttribute, mvconv.trimText);
+	  };
+	  module.float = function(selector, elAttribute) {
+	    return module._generic(selector, elAttribute, mvconv.float);
+	  };
+	  module.float0 = function(selector, elAttribute) {
+	    return module._generic(selector, elAttribute, mvconv.float0);
+	  };
+	  module.strToInt = function(selector, elAttribute) {
+	    return module._generic(selector, elAttribute, mvconv.strToInt);
+	  };
+	  module.roundTo = function(selector, opts) {
+	    if (opts == null) {
+	      opts = {};
+	    }
+	    return module._generic(selector, opts.elAttribute, mvconv.roundTo(_.omit(opts, 'elAttribute')));
+	  };
+	  module.arrayify = function(selector, elAttribute) {
+	    return module._generic(selector, elAttribute, mvconv.arrayify);
+	  };
+	  module.arrayifyCompact = function(selector, elAttribute) {
+	    return module._generic(selector, elAttribute, mvconv.arrayifyCompact);
+	  };
+	  return module;
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 150 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function($) {!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require) {
+	  var _, mvconv, utils;
+	  _ = __webpack_require__(1);
+	  utils = __webpack_require__(7);
+	  mvconv = {};
+	  mvconv.html = function(dir, val) {
+	    if (dir === 'ModelToView') {
+	      return $.ntEncodeHtml(val != null ? val : '');
+	    } else {
+	      return $.ntDecodeHtml(val);
+	    }
+	  };
+	  mvconv.float = function(dir, val) {
+	    if (dir === 'ViewToModel') {
+	      val = parseFloat(val);
+	      if (isNaN(val)) {
+	        val = null;
+	      }
+	    }
+	    return val;
+	  };
+	  mvconv.float0 = function(dir, val) {
+	    if (dir === 'ViewToModel') {
+	      val = parseFloat(val);
+	      if (isNaN(val)) {
+	        val = 0;
+	      }
+	    }
+	    return val;
+	  };
+	  mvconv.strToInt = function(dir, val) {
+	    if (dir === 'ViewToModel') {
+	      val = parseInt(val);
+	      if (isNaN(val)) {
+	        val = null;
+	      }
+	    } else {
+	      val = val != null ? val.toString() : '';
+	    }
+	    return val;
+	  };
+	  mvconv.roundTo = function(opts) {
+	    var mult, ref;
+	    if (opts == null) {
+	      opts = {};
+	    }
+	    mult = (ref = opts.mult) != null ? ref : 1;
+	    return function(dir, val) {
+	      var _val;
+	      if (dir === 'ModelToView') {
+	        if (_.isFinite(_val = parseFloat(val))) {
+	          val = utils.roundTo(_val / mult, opts.prec);
+	        }
+	      } else {
+	        val = mvconv.float(dir, val);
+	        if (_.isFinite(val)) {
+	          if ((opts.min != null) && val < opts.min && (!opts.zero || val !== 0)) {
+	            val = opts.min;
+	          } else if ((opts.max != null) && val > opts.max) {
+	            val = opts.max;
+	          }
+	          val *= mult;
+	        }
+	      }
+	      return val;
+	    };
+	  };
+	  mvconv.flag = function(dir, val) {
+	    if (dir === 'ViewToModel') {
+	      val = val ? '1' : '';
+	    }
+	    return val;
+	  };
+	  mvconv.trimText = function(dir, val) {
+	    if (dir === 'ViewToModel') {
+	      return $.trim(val);
+	    } else {
+	      return val != null ? val : '';
+	    }
+	  };
+	  mvconv.seqNum = function(dir, val) {
+	    if (dir === 'ModelToView') {
+	      if (val != null) {
+	        val = val + '.';
+	      }
+	    }
+	    return val;
+	  };
+	  mvconv.seqNumHash = function(dir, val) {
+	    if (dir === 'ModelToView') {
+	      if (val != null) {
+	        val = '#' + val;
+	      }
+	    }
+	    return val;
+	  };
+	  mvconv.bool = function(dir, val) {
+	    if (dir === 'ModelToView') {
+	      return !!val;
+	    }
+	  };
+	  mvconv.invBool = function(dir, val) {
+	    if (dir === 'ModelToView') {
+	      return !val;
+	    }
+	  };
+	  mvconv.arrayify = function(dir, val) {
+	    if (dir === 'ModelToView') {
+	      if (_.isArray(val)) {
+	        return val[0];
+	      } else {
+	        return val;
+	      }
+	    } else {
+	      if (_.isArray(val)) {
+	        return val.slice(0, 1);
+	      } else {
+	        return [val];
+	      }
+	    }
+	  };
+	  mvconv.arrayifyCompact = function(dir, val) {
+	    var ret;
+	    ret = mvconv.arrayify.apply(this, arguments);
+	    if (dir === 'ViewToModel') {
+	      ret = _.compact(ret);
+	    }
+	    return ret;
+	  };
+	  return mvconv;
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ }),
+/* 151 */
+/***/ (function(module, exports) {
+
+	module.exports = "<div class=\"nt-main-content\"></div>"
+
+/***/ }),
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function($) {var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
@@ -40996,220 +41481,6 @@
 	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-/* 142 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_RESULT__;var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require) {
-	  var SimulatorListView, SimulatorView, _BaseViews, tpl;
-	  _BaseViews = __webpack_require__(4);
-	  tpl = __webpack_require__(143);
-	  SimulatorView = __webpack_require__(144);
-	  return SimulatorListView = (function(superClass) {
-	    extend(SimulatorListView, superClass);
-
-	    function SimulatorListView() {
-	      this.initNotifierSub = bind(this.initNotifierSub, this);
-	      return SimulatorListView.__super__.constructor.apply(this, arguments);
-	    }
-
-	    SimulatorListView.prototype.className = 'nt-simulator-list';
-
-	    SimulatorListView.prototype.template = tpl;
-
-	    SimulatorListView.prototype.ItemView = SimulatorView;
-
-	    SimulatorListView.prototype.itemCont = '.nt-simulator-list-cont';
-
-	    SimulatorListView.prototype.initNotifierSub = function() {
-	      return this.notifierSub('simulator:add', (function(_this) {
-	        return function(data) {
-	          console.log('name: ', data.attributes.name);
-	          return _this.collection.add(data);
-	        };
-	      })(this));
-	    };
-
-	    return SimulatorListView;
-
-	  })(_BaseViews.CollectionView);
-	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-
-/***/ }),
-/* 143 */
-/***/ (function(module, exports) {
-
-	module.exports = "<div class=\"nt-simulator-list-header\">\r\n  <div>Name</div>\r\n  <div>Type number</div>\r\n  <div>Price</div>\r\n  <div id=\"aggregateRow\">2 simulators $50000</div>  \r\n</div>\r\n<div class=\"nt-simulator-list-cont\"></div>"
-
-/***/ }),
-/* 144 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_RESULT__;var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require) {
-	  var SimulatorView, _BaseViews, tpl;
-	  _BaseViews = __webpack_require__(4);
-	  tpl = __webpack_require__(145);
-	  return SimulatorView = (function(superClass) {
-	    extend(SimulatorView, superClass);
-
-	    function SimulatorView() {
-	      this.initDomEvents = bind(this.initDomEvents, this);
-	      return SimulatorView.__super__.constructor.apply(this, arguments);
-	    }
-
-	    SimulatorView.prototype.className = 'nt-simulator';
-
-	    SimulatorView.prototype.template = tpl;
-
-	    SimulatorView.prototype.initDomEvents = function() {
-	      SimulatorView.__super__.initDomEvents.apply(this, arguments);
-	      return this.addDomEvent({
-	        'click .nt-btn-del': (function(_this) {
-	          return function() {
-	            return _this.model.collection.remove(_this.model);
-	          };
-	        })(this)
-	      });
-	    };
-
-	    return SimulatorView;
-
-	  })(_BaseViews.View);
-	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-
-/***/ }),
-/* 145 */
-/***/ (function(module, exports) {
-
-	module.exports = "<div data-col=\"name\">{{model.name}}</div>\r\n<div data-col=\"type_number\">{{model.type_number}}</div>\r\n<div data-col=\"price\">{{model.price}}</div>\r\n<div data-col=\"delete\"><button class=\"nt-btn-del icon-button\"><i class='fa fa-trash fa-2x'></i></button></div>"
-
-/***/ }),
-/* 146 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_RESULT__;var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require) {
-	  var SearchView, _BaseViews, tpl;
-	  _BaseViews = __webpack_require__(4);
-	  tpl = __webpack_require__(147);
-	  return SearchView = (function(superClass) {
-	    extend(SearchView, superClass);
-
-	    function SearchView() {
-	      return SearchView.__super__.constructor.apply(this, arguments);
-	    }
-
-	    SearchView.prototype.className = 'nt-search';
-
-	    SearchView.prototype.template = tpl;
-
-	    return SearchView;
-
-	  })(_BaseViews.View);
-	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-
-/***/ }),
-/* 147 */
-/***/ (function(module, exports) {
-
-	module.exports = "<label id='search-label'><input type=\"text\" placeholder=\"Type search here\"></label>"
-
-/***/ }),
-/* 148 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function($) {var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require) {
-	  var Simulator, SimulatorAddView, _BaseViews, tpl;
-	  _BaseViews = __webpack_require__(4);
-	  tpl = __webpack_require__(149);
-	  Simulator = __webpack_require__(140);
-	  return SimulatorAddView = (function(superClass) {
-	    var handleError;
-
-	    extend(SimulatorAddView, superClass);
-
-	    function SimulatorAddView() {
-	      this.initDomEvents = bind(this.initDomEvents, this);
-	      return SimulatorAddView.__super__.constructor.apply(this, arguments);
-	    }
-
-	    SimulatorAddView.prototype.className = 'nt-simulator-add';
-
-	    SimulatorAddView.prototype.template = tpl;
-
-	    SimulatorAddView.prototype.initDomEvents = function() {
-	      this.addDomEvent({
-	        'click .simulator-add-btn': (function(_this) {
-	          return function() {
-	            var simulator;
-	            simulator = new Simulator({
-	              name: _this.$('.simulator-name-inp').val(),
-	              type_number: _this.$('.simulator-type-number-inp').val(),
-	              price: _this.$('.simulator-price-inp').val()
-	            });
-	            if (simulator.attributes.name === '' || simulator.attributes.type_number === '' || simulator.attributes.price === '') {
-	              return handleError('Please fill every field!');
-	            } else if (!(Number.isInteger(parseInt(simulator.attributes.price)))) {
-	              return handleError('Please fill the price field just number!');
-	            } else {
-	              _this.notifierPub('simulator:add', simulator);
-	              _this.notifierPub('msg:show', 'The add was succesfully!', 'success');
-	              _this.$('.input').val('');
-	              return _this.notifierPub('msg:hide', 5000);
-	            }
-	          };
-	        })(this)
-	      });
-	      return this.addDomEvent({
-	        'keypress .input': (function(_this) {
-	          return function() {
-	            return $('.custom-error').hide('');
-	          };
-	        })(this)
-	      });
-	    };
-
-	    handleError = function(msg) {
-	      console.log(msg);
-	      return $('.custom-error').show('').children('.fa-times-circle').html(msg);
-	    };
-
-	    return SimulatorAddView;
-
-	  })(_BaseViews.View);
-	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-/* 149 */
-/***/ (function(module, exports) {
-
-	module.exports = "<input class=\"simulator-name-inp input\" type=\"text\" placeholder=\"Type simulator name here\" >\r\n<input class=\"simulator-type-number-inp input\" type=\"text\" placeholder=\"Type simulator id here\">\r\n<input class=\"simulator-price-inp input\" type=\"text\" placeholder=\"Type simulator price here\">\r\n<button class=\"form-button simulator-add-btn\">\r\n  <i class=\"fa fa-plus\" aria-hidden=\"true\"></i>\r\n</button>\r\n<div class=\"custom-error\"><i class=\"fa fa-times-circle\" aria-hidden=\"true\"></i></div>"
-
-/***/ }),
-/* 150 */
-/***/ (function(module, exports) {
-
-	module.exports = "<div class=\"nt-main-content\"></div>"
 
 /***/ })
 /******/ ]);

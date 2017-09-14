@@ -15,6 +15,5 @@ define (require) ->
 
     initNotifierSub: =>
       @notifierSub 'simulator:add', (data) =>
-        console.log 'name: ', data.attributes.name
         @collection.add data
       
