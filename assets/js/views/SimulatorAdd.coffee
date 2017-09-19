@@ -13,27 +13,13 @@ define (require) ->
       @model = new Simulator
 
     initEvents: =>
-      ###@listenTo @model, 'change', =>
-        console.log 'change', arguments###
-      @listenTo @model, 'invalid', =>
-        handleError arguments[1]
+      @listenTo @model, 'invalid', (err_msg) =>
+        handleError err_msg.validationError
 
     initDomEvents: =>
       @addDomEvent
         'click .simulator-add-btn': =>
-          ###simulator = new Simulator 
-            name: @$('.simulator-name-inp').val()
-            type_number: @$('.simulator-type-number-inp').val()
-            price: @$('.simulator-price-inp').val()
-
-          if simulator.attributes.name == '' || 
-             simulator.attributes.type_number == '' || 
-             simulator.attributes.price == ''
-            handleError 'Please fill every field!'
-          else if !(Number.isInteger parseInt simulator.attributes.price)
-            handleError 'Please fill the price field just number!'
-          else
-            @notifierPub 'simulator:add', simulator
+          ###@notifierPub 'simulator:add', simulator
             @notifierPub 'msg:show', 'The add was succesfully!', 'success'
             @$('.input').val('');
             @notifierPub 'msg:hide', 5000

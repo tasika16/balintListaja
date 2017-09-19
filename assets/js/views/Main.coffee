@@ -1,4 +1,5 @@
 define (require) ->
+  _ = require 'underscore'
   _BaseViews = require '_BaseViews'
 
   SimulatorList = require 'collections/SimulatorList'
@@ -20,14 +21,12 @@ define (require) ->
         price: 25000
       ]
 
-      searchView = @createChild SearchView
+      @createChild(SearchView, {}, 'search').$el.appendTo @$el
 
       simulatorListView = @createChild SimulatorListView,
         collection: simulatorList
       , 'simulatorList'
 
-      simulatorAddView = @createChild SimulatorAddView
-
-      searchView.$el.appendTo @$el
       simulatorListView.$el.appendTo @$el
-      simulatorAddView.$el.appendTo @$el
+
+      @createChild(SimulatorAddView, {}, 'simulatorAdd').$el.appendTo @$el
