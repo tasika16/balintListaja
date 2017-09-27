@@ -1,53 +1,35 @@
+/*---------------Position-----------------*/
+.position-horizontaly-centered {
+  margin: 0px;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, 0);
+}
+
+.position-centered {
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
 body {
-  background-color: #100433;
+  background-color: #292e32;
 }
 
-.pageContainer{ 
-   margin: auto;
-   width: 90%;
-   padding: 20px;
+#container {
+  margin: auto;
+  font-size: 20px;
+  font-family: 'Open sans', sans-serif;
+  width: 90%;
 }
 
-.divCustom {
-  border: 1px solid transparent;
-  border-radius: 5px;
-  margin: 10px 5px 10px 5px;
-  padding: 10px 0px 10px 10px;
-  background-color: #FFFFFF;
-  font-size: 16px;
-  font-family: 'Josefin Sans';
+.nt-search {
+  padding: 10px;
 }
 
-.icon-button {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    outline: none;
-    border: 0;
-    background: transparent;
-}
-
-.form-button {
-  border: 1px solid gray;
-  border-radius: 2px;
-  background-color: white;
-  padding: 7px 12px;
-  margin: 0;
-  cursor: pointer;
-}
-
-.form-button:hover {
-  background-color: gray;
-}
-
-.delete-button{
-  cursor: pointer;
-  padding: 5px;
-}
-
-.delete-button:hover{
-  border-radius: 5px;
-  background-color: #B8B8B8;
+.nt-simulator-add {
+  padding: 10px;
 }
 
 input[type=text], select {
@@ -59,34 +41,254 @@ input[type=text], select {
   width: 32%;
 }
 
-#searchTxt {
-  width: 99%;
+.form-button {
+  border: 1px solid gray;
+  border-radius: 2px;
+  background-color: white;
+  padding: 8px 10px;
   margin: 0px;
+  cursor: pointer;
 }
 
-/*---Table Div---*/
-table {
+.form-button:hover {
+  background-color: gray;
+}
+/*---Search---*/
+.nt-search input[type=text] {
+  width: 99%;
+  padding-left: 25px;
+}
+
+#search-label {
+  position: relative;
+}
+
+#search-label:before {
+  color: #666;
+  content: "\f002";
+  font-family: FontAwesome;
+  position: absolute;
+  top: 6px;
+  left: 2px;
+}
+
+.nt-simulator-list, .nt-search, .nt-simulator-add {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.nt-simulator-list {
+  display: table;
+  border-collapse: collapse;
   width: 100%;
 }
 
-th, td {
-  text-align: left;
-  padding: 13px; 
-  border-bottom: 1px solid #ddd;
+.nt-simulator-list-header {
+  font-weight: bold;
+  display: table-header-group;
 }
 
-tfoot {
-  color: darkgray;
+.nt-simulator-list-header div {
+  display: table-cell;
+  padding: 10px;
+  padding-left: 25px;
 }
 
-.formErLabel {
-  color: #AA0303;
+.nt-simulator-list-cont {
+  display: table-row-group;
+}
+
+.nt-simulator {
+  display: table-row;
+}
+
+[data-col] {
+  display: table-cell;
+  padding: 10px;
+  padding-left: 25px;
+}
+
+.icon-button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.nt-simulator-aggregate {
+  padding: 0px;
+  font-size: 16px;
+  color: #C9C9C9;
+  float: right;
+}
+
+.graphModalBtn {
+  margin-top: 5px;
+}
+
+.custom-error {
+  background-color: #FFBABA;
+  color: #D8000C;
+  margin: 10px 0px 0px 0px;
+  padding: 4px;
+  border-radius: 2px;
+  display: none;
+}
+
+.custom-error i{
+  margin: 0px 10px;
+  font-size: 2em;
+  vertical-align: middle;
+}
+
+@media (max-width: 1374px) {
+  input[type=text], select {
+    width: 31.5%;
+  }
+}
+
+@media (max-width: 1008px) {
+  input[type=text], select {
+    width: 98%;
+    margin-top: 1px;
+    margin-bottom: 1px;
+  }
+
+  .divCustom {
+    padding: 10px 0px 10px 3px;
+  }
+
+  .form-button {
+    width: 98%;
+    margin-top: 1px;
+  }
+}
+
+@media (max-width: 980px) {
+  #container{
+    width: 99%;
+    padding: 20px 5px 20px 3px;
+  }  
+}
+
+.msg {
+  padding: 20px 40px;
+  border-radius: 2px;
+  position: fixed;
+  z-index: 99 !important;
+  width: 60%;
+  text-align: center;
+  font-size: 20px;
+}
+
+.cstm-error-co {
+  background-color: #FFBABA;
+  color: #D8000C;
+}
+
+.cstm-success-co {
+  background-color: #DFF2BF;
+  color: #4F8A10;
+}
+
+/*--------Modal---------*/
+.nt-modal-bg {
+  opacity: .4;
+  background-color: #000;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.nt-modal {
+  position: fixed;
+  z-index: 1001;
+  overflow: auto;
+  background-color: white;
+  width: 70%;
   border-radius: 3px;
 }
 
-#searchTxt {
-  background: url(searchIcon.png) no-repeat scroll;
-  background-position: 0px 10px;
-  background-size: 16px 16px;
-  padding-left: 15px;
+.nt-modal-header {
+  text-align: center;
 }
+
+.nt-modal-header h1 {
+  font-size: 20px;
+  font-family: 'Open sans', sans-serif;
+}
+
+.nt-modal-body {
+  display: table;
+  margin: 0 auto;
+}
+
+.nt-graph-item {
+  width: 100%;
+}
+
+progress, progress[role] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  background-size: auto;
+  width: 950px;
+  height: 20px;
+}
+
+progress[role]:after {
+  background-image: none;
+}
+
+progress[role] strong {
+  display: none;
+}
+
+progress {
+  color: #008000;
+}
+
+progress::-moz-progress-bar {
+  background: #008000;
+}
+
+progress::-webkit-progress-value{
+  background: #008000;
+}
+
+progress[aria-valuenow]:before {
+  background: #008000;
+}
+
+.nt-modal-footer{
+  text-align: center;
+}
+
+.nt-modal-close-btn {
+  margin: 5px;
+  padding: 5px;
+  width: 10%;
+  border: 1px solid gray;
+  border-radius: 3px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.nt-modal-close-btn:hover {
+  background-color: #CCC9C9;
+}
+
+
+
+

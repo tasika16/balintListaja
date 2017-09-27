@@ -1,3 +1,7 @@
 # Dependency directory
 node_modules
 package-lock.json
+public/style2.css
+package2.json
+public/js/bundle.js
+public/index2.html
