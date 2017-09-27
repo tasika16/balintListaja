@@ -1,3 +1,18 @@
+/*---------------Position-----------------*/
+.position-horizontaly-centered {
+  margin: 0px;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, 0);
+}
+
+.position-centered {
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
 body {
   background-color: #292e32;
 }
@@ -107,12 +122,15 @@ input[type=text], select {
   cursor: pointer;
 }
 
-#aggregateRow {
-  /* margin: 5px 80px 0px 0px; */
-  padding: 5px;
-  /* text-align: right; */
+.nt-simulator-aggregate {
+  padding: 0px;
   font-size: 16px;
-  color: #B4B4B4;
+  color: #C9C9C9;
+  float: right;
+}
+
+.graphModalBtn {
+  margin-top: 5px;
 }
 
 .custom-error {
@@ -129,8 +147,6 @@ input[type=text], select {
   font-size: 2em;
   vertical-align: middle;
 }
-
-
 
 @media (max-width: 1374px) {
   input[type=text], select {
@@ -172,19 +188,107 @@ input[type=text], select {
   font-size: 20px;
 }
 
-.cstm-er-co {
+.cstm-error-co {
   background-color: #FFBABA;
   color: #D8000C;
 }
 
-.cstm-sccs-co {
+.cstm-success-co {
   background-color: #DFF2BF;
   color: #4F8A10;
 }
 
-.position-horizontaly-centered {
-  margin: 0px;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, 0);
+/*--------Modal---------*/
+.nt-modal-bg {
+  opacity: .4;
+  background-color: #000;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
+
+.nt-modal {
+  position: fixed;
+  z-index: 1001;
+  overflow: auto;
+  background-color: white;
+  width: 70%;
+  border-radius: 3px;
+}
+
+.nt-modal-header {
+  text-align: center;
+}
+
+.nt-modal-header h1 {
+  font-size: 20px;
+  font-family: 'Open sans', sans-serif;
+}
+
+.nt-modal-body {
+  display: table;
+  margin: 0 auto;
+}
+
+.nt-graph-item {
+  width: 100%;
+}
+
+progress, progress[role] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  background-size: auto;
+  width: 950px;
+  height: 20px;
+}
+
+progress[role]:after {
+  background-image: none;
+}
+
+progress[role] strong {
+  display: none;
+}
+
+progress {
+  color: #008000;
+}
+
+progress::-moz-progress-bar {
+  background: #008000;
+}
+
+progress::-webkit-progress-value{
+  background: #008000;
+}
+
+progress[aria-valuenow]:before {
+  background: #008000;
+}
+
+.nt-modal-footer{
+  text-align: center;
+}
+
+.nt-modal-close-btn {
+  margin: 5px;
+  padding: 5px;
+  width: 10%;
+  border: 1px solid gray;
+  border-radius: 3px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.nt-modal-close-btn:hover {
+  background-color: #CCC9C9;
+}
+
+
+
+

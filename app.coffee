@@ -10,8 +10,11 @@ Simulator = bookshelf.Model.extend tableName: 'simulators'
 
 app.use express.static __dirname + '/public'
 
-app.get '/', (req,res) -> 
-  res.sendFile path.join __dirname + '/public/index.html'
+app.get '/', (req, res) -> 
+  res.redirect '/main'
+
+app.get '/main', (req, res) ->
+  res.sendFile path.join __dirname + '/index.html'
 
 handleError = (status_code, message, res) ->
   res.status(status_code).send error: message
@@ -28,7 +31,7 @@ app.get '/api/simulators', (req,res) ->
   simulator
     .orderBy 'name','ASC'
     .fetchAll()
-    .then (content) -> res.json content
+    .then (content) -> res.json {content:content,success:'great'}
     .catch -> handleError 500,'Internal Server Error!' 
   null
 
@@ -51,7 +54,7 @@ app.post '/api/simulators', json_parser, (req,res) ->
             .then (content) ->
               res.json {content}
           else
-            handleError 400, 'This Type number already exists!',res
+            handleError 200, 'This Type number already exists!',res
         .catch -> handleError 500, 'Internal Server Error!', res
     else 
       handleError 400, 'None of the fields can be empty'
@@ -73,5 +76,3 @@ app.delete '/api/simulators/:id', (req,res) ->
 console.log 'Listen to the 3000 port!'
 
 app.listen(3000)
-
-

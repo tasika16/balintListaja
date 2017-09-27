@@ -8,7 +8,7 @@ app.get('/', function (req, res) {
   res.redirect('/main');
 });
 
-app.get('/main',function(req,res){
+app.get('/main',function(req,res) {
   res.sendFile(path.join(__dirname+'/index.html'));
 })
 

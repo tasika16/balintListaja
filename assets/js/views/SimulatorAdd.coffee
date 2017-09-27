@@ -18,12 +18,7 @@ define (require) ->
 
     initDomEvents: =>
       @addDomEvent
-        'click .simulator-add-btn': =>
-          ###@notifierPub 'simulator:add', simulator
-            @notifierPub 'msg:show', 'The add was succesfully!', 'success'
-            @$('.input').val('');
-            @notifierPub 'msg:hide', 5000
-            ###
+        'click .simulator-add-btn': =>           
           if @model.isValid(isEmpty: true)
             @notifierPub 'simulator:add', @model.toJSON()
 
@@ -36,6 +31,10 @@ define (require) ->
         name: '.simulator-name-inp'
         type_number: '.simulator-type-number-inp'
         price: '.simulator-price-inp'
+    
+    initNotifierSub: =>
+      @notifierSub 'simulator:error', (errormsg) =>
+        handleError errormsg
 
     handleError = (msg) => 
       $('.custom-error').show('')

@@ -11,5 +11,6 @@ define (require) ->
       super
       @addDomEvent
         'click .nt-btn-del' : =>
-          # @model.destroy()
-          @model.collection.remove @model
+          @model.destroy error: (model, resp) =>
+            if resp[0].code == 'error_req'
+              @notifierPub 'msg:show', 'Connection Error!', 'error'

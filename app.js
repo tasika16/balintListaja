@@ -13,8 +13,12 @@ var Simulator = bookshelf.Model.extend({
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname + '/public/index.html'));
+  res.redirect('/main');
 });
+
+app.get('/main', function (req,res){
+  res.sendFile(path.join(__dirname + '/index.html'));
+})
 
 function handleError(status_code, message, res) {
   res.status(status_code).send({ error: message });

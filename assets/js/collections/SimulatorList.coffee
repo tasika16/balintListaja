@@ -3,5 +3,6 @@ define (require) ->
   Simulator = require 'models/Simulator'
 
   class SimulatorList extends _BaseCollections.Collection
+    url: '/simulators'
     model: Simulator
       

@@ -7,9 +7,9 @@ define (require) ->
         if !attrs.name? || !attrs.type_number? || !attrs.price?
           'Please fill every field!'
         else if !(Number.isInteger parseInt attrs.price)
-          ' Please fill the price field just number!'
+          'Please fill the price field just number!'
         else if attrs.name == '' || attrs.type_number == '' || attrs.price == ''
-        'Please fill every field!'
+          'Please fill every field!'
       else if attrs.name == '' || attrs.type_number == '' || attrs.price == ''
         'Please fill every field!'
         if !(Number.isInteger parseInt attrs.price)
