@@ -44,7 +44,6 @@ app.post '/api/simulators', json_parser, (req,res) ->
         .where 'type_number', req.body.type_number
         .fetch()
         .then (content) -> 
-          console.log content
           if !content?
             new Simulator
               name: req.body.name
@@ -60,6 +59,23 @@ app.post '/api/simulators', json_parser, (req,res) ->
       handleError 400, 'None of the fields can be empty'
   else 
     handleError 400, 'Bad Type!', res
+
+app.put '/api/simulators/:id', (req, res) ->
+  if is_uuid req.params.id
+    Simulator
+      .where 'id', req.params.id
+      .fetch()
+      .then (simulator) ->
+        simulator
+          .save
+            name: req.body.name
+            type_number: req.body.type_number
+            price: req.body.price
+          .then (content) ->
+            res.json {content}
+          .catch -> handleError(500, 'Internal Server Error!')
+  else
+    handleError 400, 'This is an invalid UUID'
 
 app.delete '/api/simulators/:id', (req,res) -> 
   if is_uuid req.params.id

@@ -12,7 +12,7 @@
   margin-right: -50%;
   transform: translate(-50%, -50%);
 }
-
+/*---Page---*/
 body {
   background-color: #292e32;
 }
@@ -96,6 +96,31 @@ input[type=text], select {
   display: table-cell;
   padding: 10px;
   padding-left: 25px;
+}
+
+.nt-sort {
+  cursor: pointer;
+}
+
+.nt-asc:after {
+  content: "\f106";
+  font-family: FontAwesome;
+  position: relative;
+  left: 3px;
+}
+
+.nt-asc:after {
+  content: "\f106";
+  font-family: FontAwesome;
+  position: relative;
+  left: 3px;
+}
+
+.nt-desc:after {
+  content: "\f107";
+  font-family: FontAwesome;
+  position: relative;
+  left: 3px;
 }
 
 .nt-simulator-list-cont {

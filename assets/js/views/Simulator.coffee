@@ -1,5 +1,6 @@
 define (require) ->
   _BaseViews = require '_BaseViews'
+  _BaseModels = require '_BaseModels'
   tpl = require 'raw!../../templates/simulator.html'
 
   class SimulatorView extends _BaseViews.View
