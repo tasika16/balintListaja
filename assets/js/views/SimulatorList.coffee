@@ -24,10 +24,11 @@ define (require) ->
       @model = new _BaseModels.Model search: '', _sortName: 'asc',
       _sortTNumber: '', _sortPrice: ''
       @collection ?= new SimulatorListCollection []
+      @collection.autoSave = true
       
     initEvents: =>
       super
-      @listenTo @collection, 'add remove reset', =>
+      @listenTo @collection, 'add remove reset change', =>
         @model.set _cnt : @collection.length + ' simulators'
         @model.set _sum : '$' + @sumPrice()
       

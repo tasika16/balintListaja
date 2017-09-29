@@ -53,29 +53,43 @@ app.post '/api/simulators', json_parser, (req,res) ->
             .then (content) ->
               res.json {content}
           else
-            handleError 200, 'This Type number already exists!',res
+            handleError 200, 'This Type number already exists!', res
         .catch -> handleError 500, 'Internal Server Error!', res
     else 
       handleError 400, 'None of the fields can be empty'
   else 
     handleError 400, 'Bad Type!', res
 
-app.put '/api/simulators/:id', (req, res) ->
+app.put '/api/simulators/:id', json_parser, (req, res) ->
   if is_uuid req.params.id
-    Simulator
-      .where 'id', req.params.id
-      .fetch()
-      .then (simulator) ->
-        simulator
-          .save
-            name: req.body.name
-            type_number: req.body.type_number
-            price: req.body.price
+      if (req.body.type_number)?
+        Simulator
+          .where 'type_number', req.body.type_number
+          .fetch()
           .then (content) ->
-            res.json {content}
-          .catch -> handleError(500, 'Internal Server Error!')
+            if !content?
+              putData(req,res,json_parser)
+            else
+              handleError 400, 'This Type number already exists!', res
+      else
+        putData(req,res,json_parser)
+        
   else
     handleError 400, 'This is an invalid UUID'
+
+putData = (req,res,json_parser) ->
+  Simulator
+    .where 'id', req.params.id
+    .fetch()
+    .then (simulator) ->
+      simulator
+        .save
+          name: req.body.name
+          type_number: req.body.type_number
+          price: req.body.price
+        .then (content) ->
+          res.json {content}
+        .catch -> handleError 500, 'Internal Server Error!'
 
 app.delete '/api/simulators/:id', (req,res) -> 
   if is_uuid req.params.id

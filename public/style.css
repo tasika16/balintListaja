@@ -296,6 +296,30 @@ progress[aria-valuenow]:before {
   background: #008000;
 }
 
+@media (max-width: 1650px) {
+  progress, progress[role] {
+    width: 850px;
+  }
+}
+
+@media (max-width: 1565px) {
+  progress, progress[role] {
+    width: 500px;
+  }
+}
+
+@media (max-width: 998px) {
+  progress, progress[role] {
+    width: 350px;
+  }
+}
+
+@media (max-width: 787px) {
+  progress, progress[role] {
+    width: 200px;
+  }
+}
+
 .nt-modal-footer{
   text-align: center;
 }
@@ -314,6 +338,8 @@ progress[aria-valuenow]:before {
   background-color: #CCC9C9;
 }
 
-
-
-
+[contenteditable = 'true']:active,
+[contenteditable = 'true']:focus  {
+  outline: 0px solid transparent;
+  border: 2px dashed blue;
+}
