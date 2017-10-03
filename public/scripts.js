@@ -1,3 +1,5 @@
+hideErrMessage();
+
 function ajaxReq(setType, setUrl, data = "") {
   if (setType === 'POST') { data = JSON.stringify(data); }
   return $.ajax({
@@ -15,12 +17,17 @@ ajaxRexGet();
 function ajaxRexGet() {
   ajaxReq('GET', '/api/simulators')
     .done(function (res) {
-      console.log(res.content);
       buildTable(res);
-    });
+    })
+    .fail(function (jqXHR, status, err) {
+      if (jqXHR.readyState == 0) {
+        $('.connection-error').show();
+      }
+    })
 }
 
 function buildTable(build_array) {
+  hideErrMessage();
   var tr = "<tr>";
   var trc = "</tr>";
   var td = "<td>";
@@ -29,28 +36,27 @@ function buildTable(build_array) {
   var thc = "</th>";
   var delete_btn = '';
   var table_data = "<tr>";
-  console.log(build_array);
   for (var i = 0; i < build_array.length; i++) {
     delete_btn = '<button type="button" id="deleteBtn"' +
       'class="icon-button delete-button"' +
       'data-simulator_id="' + build_array[i].id +
       '"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>';
+
     table_data += td + build_array[i].name + tdc + td +
       build_array[i].type_number + tdc + td +
       formatCurrency(build_array[i].price) + tdc + td + delete_btn + tdc + trc;
   }
 
+  var aggregateRow = build_array.length.toString() + ' simulators' + ' '
+    + formatCurrency(sumprice(build_array)) + ' total';
+
   var table_header = tr + th + "Name" + thc + th
     + "Type number" + thc + th + "Price"
     + thc + th + "" + thc + trc;
 
-  var table_footer = tr + td + " " + tdc + td
-    + build_array.length.toString() + " simulators" + tdc + td +
-    formatCurrency(sumprice(build_array)) + " total" + tdc + td + tdc + trc;
-
+  $('#aggregateRow').html(aggregateRow);
   $('#dataTableHead').html(table_header);
   $('#dataTableBody').html(table_data);
-  $('#dataTableFooter').html(table_footer);
 }
 
 /*---SearchTable---*/
@@ -58,7 +64,7 @@ $("#searchTxt").on("keyup", function () {
   var searched = 'search=' + $('#searchTxt').val();
   ajaxReq('GET', '/api/simulators', searched)
     .done(function (res) {
-      buildTable(res.content);
+      buildTable(res);
     })
 });
 
@@ -76,13 +82,13 @@ $("#addDataToArray").on("click", function (event) {
   var tmp_price = htmlEncode($('#priceInpt').val());
 
   if (tmp_name.trim() === '' || tmp_type_number.trim() === '' || tmp_price.trim() === '') {
-    $('#formErrorLabel').html("Please fill every field!");
+    writeError('Please fill every field!');
   }
   else if (!(Number.isInteger((parseInt(tmp_price))))) {
-    $('#formErrorLabel').html("Please fill the price field just number!");
+    writeError('Please fill the price field just number!');
   }
   else {
-    $('#formErrorLabel').html('');
+    $('.custom-error').hide();
     var simulator = {
       name: tmp_name,
       type_number: tmp_type_number,
@@ -94,24 +100,54 @@ $("#addDataToArray").on("click", function (event) {
         ajaxRexGet();
       })
       .fail(function (jqXHR, status, err) {
-        console.log(jqXHR);
-        $("#formErrorLabel").html(jqXHR.responseJSON.error);
+        if (jqXHR.readyState == 0) {
+          hideConnErrMessage();
+        }
+        writeError(jqXHR.responseJSON.error);
       })
   }
 });
 
+function writeError(msg) {
+  $('.custom-error').show().children().html(msg);
+}
+
+function hideErrMessage() {
+  $('.custom-error').hide();
+  $('.connection-error').hide();
+}
+
 /*---Error label set zero---*/
 $("div").children('input').on("keypress", function () {
-  $(".formErLabel").html('');
+  $(".custom-error").hide('');
 });
 
 /*---Delete row from table---*/
 $('table').on("click", 'button', function () {
   ajaxReq('DELETE', '/api/simulators/' + $(this).data('simulator_id'))
     .done(function (res) {
+      $('.custom-error').hide('');
       ajaxRexGet();
     })
+    .fail(function (jqXHR, status, err) {
+      if (jqXHR.readyState == 0) {
+        hideConnErrMessage();
+      }
+    })
 });
+
+$('.close-button').on('click', 'i', function(){
+  $('.connection-error').hide('');
+});
+
+function hideConnErrMessage() {
+  $('.connection-error').show();
+  setTimeout(function(){
+    if ($('.connection-errror').show()) {
+      $('.connection-error').hide('');
+    }
+  }, 20000);
+}
 
 function sumprice(build_array) {
   var sum = 0;
