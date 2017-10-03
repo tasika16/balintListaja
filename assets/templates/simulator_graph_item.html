@@ -1,5 +1,5 @@
 <div data-col="type_number">{{model.type_number}}</div>
 <div data-col="price">
-    <progress value="{{model.price}}" max="25000"></progress>
+    <progress value="{{model.price}}" max="{{vars.max_price}}"></progress>
 </div>
-<div data-col="price">${{model.price}}</div>
+<div data-col="price">{{model.price}}</div>

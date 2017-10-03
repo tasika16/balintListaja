@@ -2,6 +2,9 @@ define (require) ->
   _BaseModels = require '_BaseModels'
 
   class Simulator extends _BaseModels.ParentModel 
+
+    _integerAttrs: [ 'price' ]
+
     validate: (attrs, opts) =>
       if opts.isEmpty
         if !attrs.name? || !attrs.type_number? || !attrs.price?

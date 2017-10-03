@@ -19,7 +19,5 @@ define (require) ->
       simulatorGraphListView = @createChild SimulatorGraphListView,
         collection: @collection
       , 'simulatorList'
-
-      #simulatorGraphListView.maxPrice()
-
+      
       simulatorGraphListView.$el.appendTo @$('.nt-modal-body')

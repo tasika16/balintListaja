@@ -14,5 +14,5 @@ define (require) ->
 
     itemCont: '.nt-simulator-graph-list-cont'
 
-    maxPrice: =>
-      maximum = @collection.max (m) -> m.get 'price'
+    
+

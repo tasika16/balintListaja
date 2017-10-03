@@ -5,7 +5,7 @@ define (require) ->
   bindhelpers = require 'bindhelpers'
 
   class MsgView extends _BaseViews.View
-    className: 'msg'
+    className: 'msg-container position-horizontaly-centered'
 
     template: tpl
 
@@ -15,21 +15,26 @@ define (require) ->
     initNotifierSub: =>
       @notifierSub 'msg:show', (msg, status = 'success') =>
         @model.set _type: status
-        console.log msg
-        @$('.msg').show('').children('.msgIcon').html msg
+        @$('.msg-text').html msg
+        @$('.msg').show ''
         @notifierPub 'msg:hide'
       
-      @notifierSub 'msg:hide', (h_time = 5000) =>
+      @notifierSub 'msg:hide', (h_time = 15000) =>
         clearTimeout @_msgTimer
         @_msgTimer = setTimeout ->
           @$('.msg').hide ''  
-        , h_time 
+        , h_time
     
     initModelDomBindings: =>
       @addModelDomBinding
         _type : bindhelpers.class '.msg', (dir, val) ->
           if dir is 'ModelToView'
             if val then "cstm-#{val}-co" else ''
+
+    initDomEvents: =>
+      @addDomEvent
+        'click .fa-times' :=>
+          @$('.msg').hide ''
 
     beforeClose: =>
       clearTimeout @_msgTimer

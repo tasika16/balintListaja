@@ -18,7 +18,8 @@ define (require) ->
 
     initDomEvents: =>
       @addDomEvent
-        'click .simulator-add-btn': =>           
+        'click .simulator-add-btn': => 
+          console.log 'add'          
           if @model.isValid(isEmpty: true)
             @notifierPub 'simulator:add', @model.toJSON()
 
@@ -37,6 +38,6 @@ define (require) ->
         handleError errormsg
 
     handleError = (msg) => 
+      $('.error-text').html(msg)
       $('.custom-error').show('')
-      .children('.fa-times-circle').html(msg)
     

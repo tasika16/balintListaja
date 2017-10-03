@@ -4,6 +4,7 @@ define (require) ->
   bindhelpers = require 'bindhelpers'
   _BaseModels = require '_BaseModels'
   _ = require 'underscore'
+  
   class SearchView extends _BaseViews.View
     className: 'nt-search'
 

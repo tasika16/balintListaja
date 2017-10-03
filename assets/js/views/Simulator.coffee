@@ -19,6 +19,6 @@ define (require) ->
     
     initModelDomBindings: =>
       @addModelDomBinding 
-        name: bindhelpers.html '[data-col=name]','ModelToView'
-        type_number: bindhelpers.html  '[data-col=type_number]','ModelToView'
-        price: bindhelpers.html '[data-col=price]','ModelToView'
+        name: bindhelpers.html '[data-col=name]'
+        type_number: bindhelpers.html  '[data-col=type_number]'
+        price: bindhelpers.html '[data-col=price]'
